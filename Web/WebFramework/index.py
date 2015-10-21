@@ -2,15 +2,23 @@
 #coding:utf-8
 
 from wsgiref.simple_server import make_server
-import conf
+from Controller.Admin import *
+from Controller.Account import *
 
+
+
+url = (
+       ('/index/',Index),
+       ('/login/',Login),
+)
+       
 def RunServer(environ, start_response):
     start_response('200 OK', [('Content-Type', 'text/html')])
     #1、获取用户的URL
     userUrl = environ['PATH_INFO']
     #根据URL返回不同结果
     func = None
-    for item in conf.url:
+    for item in url:
         if item[0] == userUrl:
             func = item[1]
             break
